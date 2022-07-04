@@ -1,0 +1,25 @@
+<div class="container">
+  <div rtl>
+    <h1 class="main-heading">{{ 'stms.orders.title' | translate }}</h1>
+    <div class="actions">
+      <a mat-raised-button class="actions-main" color="primary" (click)="getOrders()">
+        {{ 'stms.orders.get-orders' | translate }}
+      </a>
+      <!--
+        Endpoint to fetch data: https://api.mocki.io/v2/79fb05cb
+       -->
+
+      <ag-grid-angular
+              *ngIf="!!rowData$"
+              style="width: 100%; height: 400px;"
+              class="ag-theme-alpine"
+              [gridOptions]="options"
+              [columnDefs]="columnDefs"
+              [defaultColDef]="defaultColDef"
+              [suppressRowClickSelection]="true"
+              [rowSelection]="rowSelection"
+              [rowData]="rowData$ | async"
+      ></ag-grid-angular>
+    </div>
+  </div>
+</div>
