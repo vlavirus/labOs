@@ -1,8 +1,9 @@
 <div class="container">
+  <h1 class="main-heading">{{ 'stms.menu.favourites' | translate }}</h1>
   <ag-grid-angular
     *ngIf="!!rowData$"
     style="width: 100%; height: 400px;"
-    class="ag-theme-alpine  favourites__table"
+    class="ag-theme-alpine favourites__table"
     [gridOptions]="options"
     [columnDefs]="columnDefs"
     [defaultColDef]="defaultColDef"
