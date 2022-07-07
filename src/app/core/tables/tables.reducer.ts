@@ -18,7 +18,6 @@ export const initialState: TablesState = {
   favouritesData: []
 }
 
-
 const reducer = createReducer(
   initialState,
   on(

@@ -1,21 +1,21 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { ApiService } from "app/core/api/api.service";
+import { Observable } from "rxjs";
+import { first, map } from "rxjs/operators";
+import { RowSelectedEvent } from "ag-grid-community";
+import { select, Store } from "@ngrx/store";
 
 import { ROUTE_ANIMATIONS_ELEMENTS } from "../../../core/core.module";
-import {columnDefsPatientsConst, defaultColDefConst} from "../../../shared/grid/grid.config";
-import {Observable} from "rxjs";
-import {first, map} from "rxjs/operators";
-import {RowSelectedEvent} from "ag-grid-community";
-import {select, Store} from "@ngrx/store";
-import {State} from "../../../core/tables/tables.model";
+import { columnDefsPatientsConst, defaultColDefConst } from "../../../shared/grid/grid.config";
+import { State } from "../../../core/tables/tables.model";
 import {
   actionTablesAddFavourites,
   actionTablesRemoveFavourites, actionTablesRemoveFavouritesPatients, actionTablesSetFavouritePatient,
   actionTablesSetPatientsData
 } from "../../../core/tables/tables.actions";
-import {Patient} from "../../../shared/models/patient.model";
-import {IServerRequest} from "../../../shared/models/server-request.model";
-import {selectPatients} from "../../../core/tables/tables.selectors";
+import { Patient } from "../../../shared/models/patient.model";
+import { IServerRequest } from "../../../shared/models/server-request.model";
+import { selectPatients } from "../../../core/tables/tables.selectors";
 
 @Component({
   selector: "st-patients",
