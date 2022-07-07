@@ -38,3 +38,11 @@ mat-card {
     left: 5px;
   }
 }
+
+.grid {
+  ::ng-deep {
+    .ag-body-viewport.ag-layout-normal {
+      @include overflow-scroll();
+    }
+  }
+}

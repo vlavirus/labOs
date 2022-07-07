@@ -2,9 +2,20 @@ import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { ApiService } from "app/core/api/api.service";
 
 import { ROUTE_ANIMATIONS_ELEMENTS } from "../../../core/core.module";
-import {columnDefsConst, defaultColDefConst} from "../../../shared/grid/grid.config";
+import {columnDefsPatientsConst, defaultColDefConst} from "../../../shared/grid/grid.config";
 import {Observable} from "rxjs";
-import {map, switchMap} from "rxjs/operators";
+import {first, map, switchMap, tap} from "rxjs/operators";
+import {RowSelectedEvent} from "ag-grid-community";
+import {select, Store} from "@ngrx/store";
+import {State} from "../../../core/tables/tables.model";
+import {
+  actionTablesAddFavourites,
+  actionTablesRemoveFavourites, actionTablesRemoveFavouritesPatients, actionTablesSetFavouritePatient,
+  actionTablesSetPatientsData
+} from "../../../core/tables/tables.actions";
+import {Patient} from "../../../shared/models/patient.model";
+import {IServerRequest} from "../../../shared/models/server-request.model";
+import {selectPatients} from "../../../core/tables/tables.selectors";
 
 @Component({
   selector: "st-patients",
@@ -15,9 +26,9 @@ import {map, switchMap} from "rxjs/operators";
 export class PatientsComponent implements OnInit {
   private dataHash = '51597ef3';
 
-  routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
+  public routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
-  public rowData$: Observable<any> | undefined;
+  public rowData$: Observable<Patient[]> | undefined;
 
   public options = {
     applyColumnDefOrder: true,
@@ -27,17 +38,45 @@ export class PatientsComponent implements OnInit {
 
   public rowSelection = 'multiple';
 
-  columnDefs = columnDefsConst;
+  public columnDefs = columnDefsPatientsConst;
+
+  private touched = false;
 
   constructor(
-    private readonly apiService: ApiService
+    private readonly apiService: ApiService,
+    private store: Store<State>
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.rowData$ = this.store.pipe(select(selectPatients)).pipe(first());
+  }
 
-  getPatients(): any {
-    this.rowData$ = this.apiService.getData(this.dataHash).pipe(
-      map(res => res.patient)
+  getPatients(): void {
+    this.rowData$ = this.apiService.getData<IServerRequest>(this.dataHash).pipe(
+      map((res) => {
+        const patients = res.patient.map(patient => {
+          return { ...patient, favourites: false };
+        });
+
+        this.store.dispatch(actionTablesSetPatientsData({ data: patients }))
+        this.store.dispatch(actionTablesRemoveFavouritesPatients());
+
+        return patients;
+      }),
     );
+  }
+
+  onRowSelected($event: RowSelectedEvent) {
+    if ($event.node.isSelected() && this.touched) {
+      this.store.dispatch(actionTablesAddFavourites({ data: { ...$event.data, item: 'patient', filter: $event.data.firstName } }));
+      this.store.dispatch(actionTablesSetFavouritePatient({ data: { defaultId: $event.data.defaultId } }));
+    } else if (!$event.node.isSelected() && this.touched) {
+      this.store.dispatch(actionTablesRemoveFavourites({ data: { item: 'patient', id: $event.data.defaultId } } ));
+      this.store.dispatch(actionTablesSetFavouritePatient({ data: { defaultId: $event.data.defaultId } }));
+    }
+  }
+
+  checkTouched(): void {
+    this.touched = true;
   }
 }

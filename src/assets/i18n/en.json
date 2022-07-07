@@ -3,6 +3,7 @@
   "stms.title.short": "LabOS",
   
   "stms.menu.patients": "Patients",
+  "stms.menu.favourites": "Favourites",
   "stms.menu.examples": "Examples",
   "stms.menu.orders": "Orders",
   "stms.menu.login": "Sign in",

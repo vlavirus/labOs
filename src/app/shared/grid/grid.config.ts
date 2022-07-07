@@ -1,34 +1,44 @@
-import {ICellRendererParams} from "ag-grid-community";
+import { ICellRendererParams } from "ag-grid-community";
 
 export const checkBoxConst = {
-  field: 'favorites',
+  field: 'favourites',
   checkboxSelection: true,
+  cellRenderer: (params) => {
+    params.node.setSelected(params.data['favourites']);
+  }
 };
 
-export const columnDefsConst = [
+export const columnDefsPatientsConst = [
   {
     field: 'defaultId',
     headerName: 'id',
   },
-  { field: 'fullName', headerName: 'name' },
+  { field: 'firstName', headerName: 'first name' },
   {
     field: 'birthDate',
     headerName: 'age',
     cellRenderer: (params: ICellRendererParams) => {
-      debugger
-      const { formattedDate } = params.data.birthDate;
-      const birthYear = params.data.birthYear;
-      const birthDate = new Date(formattedDate)
-      const millis = Date.now() - birthDate.getTime();
-      const age = new Date().getFullYear() - birthYear;
-      const newTag = `<span>${ 
-        !!formattedDate ? new Date(millis).getUTCFullYear() - 1970 : age}</span>`;
-
-      return newTag ;
+      return gridGetAge(params);
     },
+  },
+  {
+    field: 'code',
+    headerName: 'code'
   },
   checkBoxConst,
 ];
+
+export const gridGetAge = (params: ICellRendererParams) => {
+  const {formattedDate} = params.data.birthDate;
+  const birthYear = params.data.birthYear;
+  const birthDate = new Date(formattedDate)
+  const millis = Date.now() - birthDate.getTime();
+  const age = new Date().getFullYear() - birthYear;
+  const newTag = `<span>${
+    !!formattedDate ? new Date(millis).getUTCFullYear() - 1970 : age}</span>`;
+
+  return newTag;
+}
 
 export const columnDefsOrdersConst = [
   {
@@ -54,8 +64,8 @@ export const columnDefsOrdersConst = [
       return params.data.status.identifier;
     }
   },
+  checkBoxConst,
 ];
-
 
 export const defaultColDefConst = {
   flex: 1,

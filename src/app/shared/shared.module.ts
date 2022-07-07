@@ -46,19 +46,18 @@ import {
   faBook
 } from "@fortawesome/free-solid-svg-icons";
 import { faMediumM, faGithub } from "@fortawesome/free-brands-svg-icons";
+import { AgGridModule } from "ag-grid-angular";
 
 import { BigInputComponent } from "./components/big-input/big-input/big-input.component";
 import { BigInputActionComponent } from "./components/big-input/big-input-action/big-input-action.component";
 import { RtlSupportDirective } from "./directives/rtl-support/rtl-support.directive";
-import {AgGridModule} from "ag-grid-angular";
+import { GridRemoveButtonComponent } from './buttons/grid-remove-button/grid-remove-button.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-
     TranslateModule,
-
     MatButtonModule,
     MatSelectModule,
     MatTabsModule,
@@ -74,22 +73,20 @@ import {AgGridModule} from "ag-grid-angular";
     MatSnackBarModule,
     MatSlideToggleModule,
     MatDividerModule,
-
     FontAwesomeModule,
     AgGridModule.withComponents([]),
   ],
   declarations: [
     BigInputComponent,
     BigInputActionComponent,
-    RtlSupportDirective
+    RtlSupportDirective,
+    GridRemoveButtonComponent,
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
     TranslateModule,
-
     MatButtonModule,
     MatMenuModule,
     MatTabsModule,
@@ -108,13 +105,12 @@ import {AgGridModule} from "ag-grid-angular";
     MatSliderModule,
     MatDatepickerModule,
     MatNativeDateModule,
-
     FontAwesomeModule,
-
     BigInputComponent,
     BigInputActionComponent,
     RtlSupportDirective,
-    AgGridModule
+    AgGridModule,
+    GridRemoveButtonComponent
   ]
 })
 export class SharedModule {

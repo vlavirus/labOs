@@ -4,7 +4,6 @@ import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
 
 import { environment as env } from "../../environments/environment";
-
 import {
   authLogin,
   authLogout,
@@ -34,7 +33,8 @@ export class AppRootComponent implements OnInit {
   languages = ["en", "he"];
   navItems = [
     { link: "patients", label: "stms.menu.patients" },
-    { link: "orders", label: "stms.menu.orders" }
+    { link: "orders", label: "stms.menu.orders" },
+    { link: "favourites", label: "stms.menu.favourites" }
   ];
   navigationSideMenu = [
     ...this.navItems,

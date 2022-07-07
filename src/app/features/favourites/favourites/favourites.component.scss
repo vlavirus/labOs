@@ -1,6 +1,7 @@
 @import '../../../../styles-variables';
 
-.grid {
+.favourites__table {
+  margin-top: 92px;
   ::ng-deep {
     .ag-body-viewport.ag-layout-normal {
       @include overflow-scroll();

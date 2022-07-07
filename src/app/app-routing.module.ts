@@ -18,6 +18,11 @@ const routes: Routes = [
       import("./features/orders/orders.module").then(m => m.OrdersModule)
   },
   {
+    path: "favourites",
+    loadChildren: () =>
+      import("./features/favourites/favourites.module").then(m => m.FavouritesModule)
+  },
+  {
     path: "settings",
     loadChildren: () =>
       import("./features/settings/settings.module").then(m => m.SettingsModule)

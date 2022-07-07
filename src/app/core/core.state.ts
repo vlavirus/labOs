@@ -14,10 +14,13 @@ import { authReducer } from './auth/auth.reducer';
 import { RouterStateUrl } from './router/router.state';
 import { settingsReducer } from './settings/settings.reducer';
 import { SettingsState } from './settings/settings.model';
+import { tablesReducer } from "./tables/tables.reducer";
+import { TablesState } from "./tables/tables.model";
 
 export const reducers: ActionReducerMap<AppState> = {
   auth: authReducer,
   settings: settingsReducer,
+  tables: tablesReducer,
   router: routerReducer
 };
 
@@ -40,6 +43,11 @@ export const selectSettingsState = createFeatureSelector<
   SettingsState
 >('settings');
 
+export const selectTablesState = createFeatureSelector<
+  AppState,
+  TablesState
+  >('tables');
+
 export const selectRouterState = createFeatureSelector<
   AppState,
   RouterReducerState<RouterStateUrl>
@@ -48,5 +56,6 @@ export const selectRouterState = createFeatureSelector<
 export interface AppState {
   auth: AuthState;
   settings: SettingsState;
+  tables: TablesState;
   router: RouterReducerState<RouterStateUrl>;
 }
