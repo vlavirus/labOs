@@ -47,7 +47,7 @@ export class PatientsComponent implements OnInit {
     private store: Store<State>
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.rowData$ = this.store.pipe(select(selectPatients)).pipe(first());
   }
 
@@ -66,7 +66,7 @@ export class PatientsComponent implements OnInit {
     );
   }
 
-  onRowSelected($event: RowSelectedEvent) {
+  onRowSelected($event: RowSelectedEvent): void {
     if ($event.node.isSelected() && this.touched) {
       this.store.dispatch(actionTablesAddFavourites({ data: { ...$event.data, item: 'patient', filter: $event.data.firstName } }));
       this.store.dispatch(actionTablesSetFavouritePatient({ data: { defaultId: $event.data.defaultId } }));

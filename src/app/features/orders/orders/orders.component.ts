@@ -53,7 +53,7 @@ export class OrdersComponent implements OnInit {
     this.rowData$ = this.store.pipe(select(selectOrders)).pipe(first());
   }
 
-  getOrders(): any {
+  getOrders(): void {
     this.rowData$ = this.apiService.getData<IServerRequest>(this.dataHash).pipe(
       map(res => {
         const orders = res.order.map(order => {
@@ -68,7 +68,7 @@ export class OrdersComponent implements OnInit {
     )
   }
 
-  onRowSelected($event: RowSelectedEvent) {
+  onRowSelected($event: RowSelectedEvent): void {
     if ($event.node.isSelected() && this.touched) {
       this.store.dispatch(actionTablesAddFavourites({ data: { ...$event.data, item: 'order', filter: $event.data.orderName } }));
       this.store.dispatch(actionTablesSetFavouriteOrder({ data: { orderNum: $event.data.orderNum } }));
