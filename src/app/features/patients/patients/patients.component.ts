@@ -4,7 +4,7 @@ import { ApiService } from "app/core/api/api.service";
 import { ROUTE_ANIMATIONS_ELEMENTS } from "../../../core/core.module";
 import {columnDefsPatientsConst, defaultColDefConst} from "../../../shared/grid/grid.config";
 import {Observable} from "rxjs";
-import {first, map, switchMap, tap} from "rxjs/operators";
+import {first, map} from "rxjs/operators";
 import {RowSelectedEvent} from "ag-grid-community";
 import {select, Store} from "@ngrx/store";
 import {State} from "../../../core/tables/tables.model";
